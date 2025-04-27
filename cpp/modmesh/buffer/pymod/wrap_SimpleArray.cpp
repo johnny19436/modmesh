@@ -180,6 +180,12 @@ class MODMESH_PYTHON_WRAPPER_VISIBILITY WrapSimpleArray
             .wrap_modifiers()
             .wrap_calculators()
             .wrap_sort()
+            .def_static(
+                "empty",
+                [](py::object const & shape) {
+                    return wrapped_type::empty(make_shape(shape));
+                },
+                py::arg("shape"))
             // ATTENTION: always keep the same interface between WrapSimpleArrayPlex and WrapSimpleArray
             ;
     }

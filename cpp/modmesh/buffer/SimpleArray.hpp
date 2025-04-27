@@ -707,6 +707,11 @@ public:
     value_type const * body() const { return m_body; }
     value_type * body() { return m_body; }
 
+    // Static factory methods
+    static SimpleArray empty(shape_type const & shape)
+    {
+        return SimpleArray(shape);
+    }
 private:
     void check_c_contiguous(small_vector<size_t> const & shape,
                             small_vector<size_t> const & stride) const
@@ -1026,6 +1031,16 @@ public:
 
     /// TODO: add all SimpleArray public methods
 
+    // Static factory methods
+    static SimpleArrayPlex empty(const shape_type & shape, const std::string & data_type_string)
+    {
+        return SimpleArrayPlex(shape, data_type_string);
+    }
+
+    static SimpleArrayPlex empty(const shape_type & shape, const DataType data_type)
+    {
+        return SimpleArrayPlex(shape, data_type);
+    }
 private:
     bool m_has_instance_ownership = false; /// ownership of the instance
     void * m_instance_ptr = nullptr; /// the pointer of the SimpleArray<T> instance

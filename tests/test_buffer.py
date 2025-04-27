@@ -1139,6 +1139,46 @@ class SimpleArrayPlexTC(unittest.TestCase):
                 for k in range(4):
                     self.assertEqual(stride_arr[i, j, k], sarr[i, j, k])
 
+    def test_SimpleArray_empty(self):
+        # Test empty() factory function for typed arrays
+        sarr = modmesh.SimpleArrayFloat64.empty((2, 3, 4))
+        self.assertEqual((2, 3, 4), sarr.shape)
+        self.assertEqual(2 * 3 * 4 * 8, sarr.nbytes)
+        
+        # Test with different data types
+        sarr_int32 = modmesh.SimpleArrayInt32.empty((3, 5))
+        self.assertEqual((3, 5), sarr_int32.shape)
+        self.assertEqual(3 * 5 * 4, sarr_int32.nbytes)
+        
+        sarr_bool = modmesh.SimpleArrayBool.empty((10,))
+        self.assertEqual((10,), sarr_bool.shape)
+        self.assertEqual(10, sarr_bool.nbytes)
+        
+        # Test with empty shape
+        sarr_empty = modmesh.SimpleArrayFloat64.empty(())
+        self.assertEqual((), sarr_empty.shape)
+        self.assertEqual(0, sarr_empty.nbytes)
+
+    def test_SimpleArrayPlex_empty(self):
+        # Test empty() factory function for SimpleArrayPlex
+        sarr = modmesh.SimpleArray.empty((2, 3, 4), dtype="float64")
+        self.assertEqual((2, 3, 4), sarr.shape)
+        self.assertEqual(2 * 3 * 4 * 8, sarr.nbytes)
+        
+        # Test with different data types
+        sarr_int32 = modmesh.SimpleArray.empty((3, 5), dtype="int32")
+        self.assertEqual((3, 5), sarr_int32.shape)
+        self.assertEqual(3 * 5 * 4, sarr_int32.nbytes)
+        
+        sarr_bool = modmesh.SimpleArray.empty((10,), dtype="bool")
+        self.assertEqual((10,), sarr_bool.shape)
+        self.assertEqual(10, sarr_bool.nbytes)
+        
+        # Test with empty shape
+        sarr_empty = modmesh.SimpleArray.empty((), dtype="float64")
+        self.assertEqual((), sarr_empty.shape)
+        self.assertEqual(0, sarr_empty.nbytes)
+
 
 class SimpleCollectorTC(unittest.TestCase):
 

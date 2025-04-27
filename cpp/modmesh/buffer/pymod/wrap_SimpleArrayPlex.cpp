@@ -327,6 +327,14 @@ class MODMESH_PYTHON_WRAPPER_VISIBILITY WrapSimpleArrayPlex : public WrapBase<Wr
                       self, [size](auto & array)
                       { return array.set_nghost(size); }); })
             .def_property_readonly("nbody", DECL_MM_EXECUTE_TYPED_ARRAY_METHOD(nbody))
+            .def_static(
+                "empty",
+                [](pybind11::object const & shape, std::string const & dtype)
+                { 
+                    return wrapped_type::empty(make_shape(shape), dtype);
+                },
+                pybind11::arg("shape"),
+                pybind11::arg("dtype"))
             .wrap_modifiers()
             .wrap_calculators()
             // ATTENTION: always keep the same interface between WrapSimpleArrayPlex and WrapSimpleArray
