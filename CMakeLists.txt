@@ -144,36 +144,17 @@ execute_process(
 )
 message(STATUS "PYSIDE6_PYTHON_PACKAGE_PATH: ${PYSIDE6_PYTHON_PACKAGE_PATH}")
 
-execute_process(
-    COMMAND python3 -c "import sys, os, shiboken6; sys.stdout.write(os.path.dirname(shiboken6.__file__))"
-    OUTPUT_VARIABLE SHIBOKEN6_PYTHON_PACKAGE_PATH
-)
-message(STATUS "SHIBOKEN6_PYTHON_PACKAGE_PATH: ${SHIBOKEN6_PYTHON_PACKAGE_PATH}")
-execute_process(
-    COMMAND python3 -c "import sys, os, shiboken6_generator; sys.stdout.write(os.path.dirname(shiboken6_generator.__file__))"
-    OUTPUT_VARIABLE SHIBOKEN6_GENERATOR_PYTHON_PACKAGE_PATH
-)
-message(STATUS "SHIBOKEN6_GENERATOR_PYTHON_PACKAGE_PATH: ${SHIBOKEN6_GENERATOR_PYTHON_PACKAGE_PATH}")
-
 if(NOT "${PYSIDE6_PYTHON_PACKAGE_PATH}" STREQUAL "")
     include_directories("${PYSIDE6_PYTHON_PACKAGE_PATH}/include")
     link_directories("${PYSIDE6_PYTHON_PACKAGE_PATH}")
 endif()
-if(NOT "${SHIBOKEN6_GENERATOR_PYTHON_PACKAGE_PATH}" STREQUAL "")
-    include_directories("${SHIBOKEN6_GENERATOR_PYTHON_PACKAGE_PATH}/include")
-endif()
-if(NOT "${SHIBOKEN6_PYTHON_PACKAGE_PATH}" STREQUAL "")
-    link_directories("${SHIBOKEN6_PYTHON_PACKAGE_PATH}")
-endif()
 
-# PySide6 and Shiboken6 library name are different in Windows and Unix-like OS
+# PySide6 library name are different in Windows and Unix-like OS
 # therefore needs sperate in different cases
 if(MSVC)
     file(GLOB PYSIDE6_LIBFILE LIST_DIRECTORIES false "${PYSIDE6_PYTHON_PACKAGE_PATH}/pyside6.*.lib")
-    file(GLOB SHIBOKEN6_LIBFILE LIST_DIRECTORIES false "${SHIBOKEN6_PYTHON_PACKAGE_PATH}/shiboken6.*.lib")
 else()
     file(GLOB PYSIDE6_LIBFILE LIST_DIRECTORIES false "${PYSIDE6_PYTHON_PACKAGE_PATH}/libpyside6.*")
-    file(GLOB SHIBOKEN6_LIBFILE LIST_DIRECTORIES false "${SHIBOKEN6_PYTHON_PACKAGE_PATH}/libshiboken6.*")
 endif()
 
 add_subdirectory(cpp/modmesh)
